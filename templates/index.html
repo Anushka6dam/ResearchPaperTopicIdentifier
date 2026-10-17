@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Paper Topic Identifier</title>
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header class="navbar">
+        <a href="/" class="brand">
+            <span class="brand-icon">R</span>
+            <span>Research<span class="brand-light">Lens</span></span>
+        </a>
+        <span class="nav-label">AI Research Assistant</span>
+    </header>
+
+    <main class="container">
+        <section class="hero">
+            <div class="eyebrow">
+                <span class="status-dot"></span>
+                NLP-POWERED CLASSIFICATION
+            </div>
+            <h1>Discover your paper's<br>
+                <span>research domain.</span>
+            </h1>
+            <p class="subtitle">
+                Identify the most relevant research topic from a paper's
+                title and abstract using machine learning.
+            </p>
+        </section>
+
+        <section class="workspace">
+            <div class="form-card">
+                <div class="card-heading">
+                    <div>
+                        <h2>Analyze a research paper</h2>
+                        <p>Enter the paper details below to get started.</p>
+                    </div>
+                    <span class="step-number">01 / INPUT</span>
+                </div>
+
+                <form method="POST" action="/">
+                    <label for="title">Paper title</label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="e.g. Deep Learning for Image Recognition"
+                        value="{{ title }}"
+                        required
+                    >
+
+                    <div class="label-row">
+                        <label for="abstract">Paper abstract</label>
+                        <span class="helper">Paste the abstract text</span>
+                    </div>
+                    <textarea
+                        id="abstract"
+                        name="abstract"
+                        rows="8"
+                        placeholder="Enter the research paper abstract here..."
+                        required
+                    >{{ abstract }}</textarea>
+
+                    {% if error %}
+                    <div class="error-message">{{ error }}</div>
+                    {% endif %}
+
+                    <button type="submit" class="predict-button">
+                        Identify Research Topic
+                        <span aria-hidden="true">→</span>
+                    </button>
+                    <p class="privacy-note">
+                        Your text is processed by the local model running
+                        with this application.
+                    </p>
+                </form>
+            </div>
+
+            <aside class="info-card">
+                <div class="info-icon">✳</div>
+                <p class="mini-label">HOW IT WORKS</p>
+                <h3>From text to topic</h3>
+                <div class="process-step">
+                    <span>1</span>
+                    <div>
+                        <strong>Text preprocessing</strong>
+                        <p>Cleans and prepares the paper text.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <span>2</span>
+                    <div>
+                        <strong>TF-IDF extraction</strong>
+                        <p>Converts text into numerical features.</p>
+                    </div>
+                </div>
+                <div class="process-step">
+                    <span>3</span>
+                    <div>
+                        <strong>SVM classification</strong>
+                        <p>Predicts one of eight research domains.</p>
+                    </div>
+                </div>
+                <div class="model-tag">
+                    <span class="status-dot"></span>
+                    Linear SVM · TF-IDF
+                </div>
+            </aside>
+        </section>
+
+        {% if prediction %}
+        <section class="result-card" aria-live="polite">
+            <div class="result-icon">✓</div>
+            <div class="result-content">
+                <p class="mini-label">CLASSIFICATION COMPLETE</p>
+                <h2>Predicted research topic</h2>
+                <p class="topic-name">{{ prediction }}</p>
+                <p class="result-description">
+                    This is the topic predicted from the text you submitted.
+                </p>
+            </div>
+            <a href="/" class="reset-link">Analyze another →</a>
+        </section>
+        {% endif %}
+
+        <section class="domains-section">
+            <div class="section-heading">
+                <div>
+                    <p class="mini-label">SUPPORTED CATEGORIES</p>
+                    <h2>Eight research domains</h2>
+                </div>
+                <span class="domain-count">08 TOPICS</span>
+            </div>
+
+            <div class="domain-grid">
+                <div class="domain-item"><span>01</span>Artificial Intelligence</div>
+                <div class="domain-item"><span>02</span>Computer Networks</div>
+                <div class="domain-item"><span>03</span>Computer Vision</div>
+                <div class="domain-item"><span>04</span>Cybersecurity</div>
+                <div class="domain-item"><span>05</span>Databases</div>
+                <div class="domain-item"><span>06</span>Machine Learning</div>
+                <div class="domain-item"><span>07</span>Natural Language Processing</div>
+                <div class="domain-item"><span>08</span>Software Engineering</div>
+            </div>
+        </section>
+
+        <footer>
+            <span>ResearchLens</span>
+            <span>Research Paper Topic Identification using NLP</span>
+        </footer>
+    </main>
+</body>
+</html>
